@@ -50,6 +50,13 @@
     </div>
 </div>
 <div class="card mt">
+    <div class="d-flex justify-content-end mt-1">
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Rechercher un Etudiant" aria-label="Search">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+
     <div class="card-body table-responsive-sm">
         <table class="table table-striped">
             <thead>
