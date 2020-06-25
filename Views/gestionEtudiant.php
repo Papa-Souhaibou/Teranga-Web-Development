@@ -2,41 +2,58 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title" id="title">Inscription</h1>
-                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h1 class="modal-title text-center" id="title">Enregistrer Etudiant</h1>
+                <!-- <button type="button" class="close" data-dismiss="modal">x</button> -->
             </div>
             <div class="modal-body" id="msg">
-                <form>
+                <form  method="post" id="studentSubscribtionForm">
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">Nom</label>
-                            <input type="text" class="form-control" id="inputEmail4" placeholder="nom">
+                            <label for="nom">Nom</label>
+                            <input type="text" name="nom" class="form-control" id="nom" placeholder="nom">
+                            <small class="text-danger"></small>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputPassword4">Prenom</label>
-                            <input type="text" class="form-control" id="inputPassword4" placeholder="Prenom">
+                            <label for="prenom">Prenom</label>
+                            <input type="text" name="prenom" class="form-control" id="prenom" placeholder="Prenom">
+                            <small class="text-danger"></small>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputAddress">Annee D'inscription</label>
-                        <input type="date" class="form-control" id="inputAddress" placeholder="">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="inputCity">Telephone</label>
-                            <input type="tel" class="form-control" id="inputCity">
+                            <label for="inputemail">Email</label>
+                            <input type="email" name="email" class="form-control" id="inputemail" placeholder="example@example.com">
+                            <small class="text-danger"></small>
                         </div>
+                        <div class="form-group col-md-6">
+                            <label for="dateInscription">Annee D'inscription</label>
+                            <input type="date" name="dateInscription" class="form-control" id="dateInscription" placeholder="">
+                            <small class="text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputState">Date Naissance</label>
-                            <input type="date" class="form-control" id="inputCity">
+                            <input type="date" name="datenaissance" class="form-control" id="inputCity">
+                            <small class="text-danger"></small>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">Telephone</label>
+                            <input type="tel" name="tel" class="form-control" id="inputCity">
+                            <small class="text-danger"></small>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputState">Status Etudiant</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>Choisir le Status de l'etudiant</option>
-                            <option>...</option>
+                        <select id="inputState" name="typeetudiant" class="form-control">
+                            <option value="#" selected>Choisir le Status de l'etudiant</option>
+                            <option value="boursier logé">Boursier Loge</option>
+                            <option value="boursier non logé">Boursier Non Loge</option>
+                            <option value="non boursier">Non Boursier</option>
                         </select>
+                        <small class="text-danger"></small>
+                    </div>
+                    <div class="" id="info">
                     </div>
                     <div class="d-flex justify-content-around">
                         <button type="submit" class="btn btn-primary">Enregistrer</button>
@@ -113,7 +130,7 @@
             </tbody>
         </table>
         <div class="d-flex justify-content-end">
-            <button type="button" name="" data-toggle="modal" data-target="#subscribe-modal" id="" class="btn btn-primary">Ajouter un nouveau etudiant</button>
+            <button type="button" name="" data-toggle="modal" data-target="#subscribe-modal" id="addNewStudent" class="btn btn-primary">Ajouter un nouveau etudiant</button>
         </div>
     </div>
 </div>

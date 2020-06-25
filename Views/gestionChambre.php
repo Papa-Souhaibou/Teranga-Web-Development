@@ -46,7 +46,7 @@
     <div class="d-flex justify-content-center mt-1">
         <button type="button" name="" data-toggle="modal" data-target="#subscribe-modal" id="" class="btn btn-primary">Ajouter une nouvelle chambre</button>
     </div>
-    <div class="card-body table-responsive-sm">
+    <div class="card-body table-responsive-sm" id="scrollable">
         <table class="table table-striped">
             <thead>
             <tr>
