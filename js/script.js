@@ -1,11 +1,62 @@
 $(function () {
     const tbody = $("tbody");
-    // let numbreOfStudent;
+    let idchambre;
+    let roomNumber;
+    const roomsPerPage = 15;
+    let currentPage = 0;
+    const setRoomFormModication = (idElt,value) => {
+        $(`#${idElt}`).val(value);
+        $(`#${idElt}`).text(value);
+    };
+    const displayRooms = room => {
+        const elt = `
+        <tr id="${room.idchambre}">
+            <th scope="row">${room.numchambre}</th>
+            <td>${room.type}</td>
+            <td><img src="img/ic-liste-active.png" id="modify${room.idchambre}" title="Modifier le type de la chambre"></td>
+            <td><img src="img/ic-supprimer.png" id="delete${room.idchambre}" title="Supprimer la chambre"></td>
+        </tr>
+        `;
+        $("tbody").append(elt);
+        $(`#modify${room.idchambre}`).on("click", function () {
+            const confirm = window.confirm("voulez vous vraiment modifier cette chambre ?");
+            if (confirm) {
+                setRoomFormModication("previousType","");
+                setRoomFormModication("previousType",room.type);
+                const newType = room.type == "individuelle" ? "commune" : room.type == "commune" ? "individuelle" : room.type;
+                setRoomFormModication("newType","");
+                setRoomFormModication("newType",newType);
+                idchambre = room.idchambre;
+                $('#setType').modal('toggle');
+            }
+        });
+        $(`#delete${room.idchambre}`).on("click", function () {
+            const confirm = window.confirm("voulez vous vraiment supprimer cette chambre ?");
+            if (confirm) {
+                const data = new FormData();
+                data.append("delete","del");
+                data.append("idchambre",room.idchambre);
+                $.ajax({
+                    type: "POST",
+                    url: "Controllers/ChambreController.php",
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    dataType: "json",
+                    success: function (response) {
+                        $(`#${room.idchambre}`).remove();
+                        roomNumber = response.number;
+                    }
+                });
+            }
+        });
+    };
     const getRooms = (limit=0,offset=15) => {
         const form = new FormData();
         form.append("getRoom","room");
         form.append("limit",limit);
         form.append("offset",offset);
+        $("tbody").html('<tr><td colspan="4" class="text-center"><img src="http://www.mediaforma.com/sdz/jquery/ajax-loader.gif"></td></tr>');
         $.ajax({
             type: "POST",
             url: "Controllers/ChambreController.php",
@@ -14,8 +65,15 @@ $(function () {
             data: form,
             dataType: "json",
             success: function (response) {
-                console.log(response);
-            }
+                $("tbody").html("");
+                if (response.length) {
+                    for (const room of response) {
+                        displayRooms(room);
+                    }
+                }else{
+                    $("tbody").html('<tr><td colspan="4" class="text-center">Plus de Chambre</td></tr>');
+                }
+            } 
         });
     };
     const showError = (element, message) => {
@@ -24,7 +82,10 @@ $(function () {
     const load = () => {
         const href = window.location.href.split("#")[1] || "gestionEtudiant";
         if(href == "gestionChambre"){
-            $("#websiteContent").load(`Views/${href}.php`);
+            $("#websiteContent").load(`Views/${href}.php`,function () {
+                getRooms(0,15);
+                roomTypeModificationSubmitEvent();
+            });
         }else if(href == "gestionEtudiant"){
             $("#websiteContent").load(`Views/${href}.php`,function () {
                 $("#addNewStudent").click(function (e) { 
@@ -181,10 +242,64 @@ $(function () {
             small.textContent = "";
         }
     };
+    const roomTypeModificationSubmitEvent = () => {
+        $("#previous").on("click", function () {
+            currentPage--;
+            const limit = currentPage <= 0 ? 0 * roomsPerPage : currentPage * roomsPerPage;
+            getRooms(limit);
+        });
+        $("#next").on("click", function () {
+            currentPage++;
+            if(roomNumber == undefined){
+                const data = new FormData();
+                data.append("count","count");
+                $.ajax({
+                    type: "POST",
+                    url: "Controllers/ChambreController.php",
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    dataType: "json",
+                    success: function (response) {
+                        roomNumber = response.number;
+                    }
+                });
+            }else{
+                const page = Math.ceil(roomNumber/roomsPerPage);
+                if (currentPage >= page) {
+                    currentPage = page;
+                    const limit = currentPage * roomsPerPage;
+                    getRooms(limit);
+                }else{
+                    const limit = currentPage * roomsPerPage;
+                    getRooms(limit);
+                }
+            }
+            
+        });
+        $("#setForm").on("submit", function (event) {
+            const data = new FormData(document.querySelector("#setForm"));
+            data.append("modify","modif");
+            data.append("idchambre",idchambre);
+            $.ajax({
+                type: "POST",
+                url: "Controllers/ChambreController.php",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (response) {
+                            
+                }
+            });
+        });
+    };
     $("#navbar a").on("click",function () {
         const href = this.getAttribute("href").split("#")[1];
         if(href == "gestionChambre"){
-            $("#websiteContent").load(`Views/${href}.php`);
+            $("#websiteContent").load(`Views/${href}.php`,function () {
+                getRooms(0,15);
+                roomTypeModificationSubmitEvent();
+            });
         }else if(href == "gestionEtudiant"){
             $("#websiteContent").load(`Views/${href}.php`,function () {
                 $("#addNewStudent").click(function (e) { 

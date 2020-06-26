@@ -1,3 +1,30 @@
+<div class="modal fade" id="setType">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title">Modifier le Type chambre</h1>
+                <button type="button" class="close" data-dismiss="modal">x</button>
+            </div>
+            <div class="modal-body">
+                <form action="" class="form" id="setForm" method="post">
+                    <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">Status </label>
+                        <div class="col-sm-9">
+                            <select class="mdb-select md-form form-control questionField" name="type" id="type">
+                                <option value="" id="previousType" disabled selected>Donnez le type de chambre</option>
+                                <option value="" id="newType"></option>
+                            </select>
+                            <small class="text-danger"></small>
+                        </div>
+                    </div>
+                    <button type="submit" name="submit" id="" class="btn float-right btn-success">Modifier</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="subscribe-modal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -57,41 +84,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th scope="row">0120001</th>
-                <td>individuelle</td>
-                <td><img src="img/ic-liste-active.png"></td>
-                <td><img src="img/ic-supprimer.png"></td>
-            </tr>
-            <tr>
-                <th scope="row">0100002</th>
-                <td>commune</td>
-                <td><img src="img/ic-liste-active.png"></td>
-                <td><img src="img/ic-supprimer.png"></td>
-            </tr>
-            <tr>
-                <th scope="row">0110003</th>
-                <td>individuelle</td>
-                <td><img src="img/ic-liste-active.png"></td>
-                <td><img src="img/ic-supprimer.png"></td>
-            </tr>
-            <tr>
-                <th scope="row">0130004</th>
-                <td>commune</td>
-                <td><img src="img/ic-liste-active.png"></td>
-                <td><img src="img/ic-supprimer.png"></td>
-            </tr>
-            <tr>
-                <th scope="row">0140005</th>
-                <td>individuelle</td>
-                <td><img src="img/ic-liste-active.png"></td>
-                <td><img src="img/ic-supprimer.png"></td>
-            </tr>
+                
             </tbody>
         </table>
         <div class="d-flex justify-content-around">
-            <button type="button" class="btn btn-primary">Precedent</button>
-            <button type="button" class="btn btn-primary">Suivant</button>
+            <button type="button" class="btn btn-primary" id="previous">Precedent</button>
+            <button type="button" class="btn btn-primary" id="next">Suivant</button>
         </div>
     </div>
 </div>
