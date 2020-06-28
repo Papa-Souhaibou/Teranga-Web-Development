@@ -2,7 +2,7 @@ $(function () {
     const tbody = $("tbody");
     let idchambre;
     let roomNumber;
-    const roomsPerPage = 15;
+    const roomsPerPage = 10;
     let currentPage = 0;
     const setRoomFormModication = (idElt,value) => {
         $(`#${idElt}`).val(value);
@@ -52,6 +52,7 @@ $(function () {
         });
     };
     const getRooms = (limit=0,offset=15) => {
+        offset = roomsPerPage;
         const form = new FormData();
         form.append("getRoom","room");
         form.append("limit",limit);
@@ -114,13 +115,14 @@ $(function () {
                     hasError = true;
                     showError(this,"Un email valide est sous la forme exemple@exemple.com");
                 }
-            }else if((this.type == "text" && this.value) && this.value.length <= 4){
+            }else if((this.type == "text" && this.value) && (this.value.length < 4 && this.getAttribute("name") == "prenom")){
                 hasError = true;
                 showError(this,"La longueur minimale est de 4 caracteres.");
             }
         });
         $("#studentSubscribtionForm input").on("input", function () {
             showError(this,"");
+            hasError = false;
         });
         $("#inputState").on("change", function () {
             $("#info").html("");
@@ -229,10 +231,9 @@ $(function () {
                     data: form,
                     dataType: "json",
                     success: function (response) {
-                        console.log(response);
-                        
                     }
                 });
+                $('#subscribe-modal').modal('hide');
             }
         });
     };

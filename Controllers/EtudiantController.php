@@ -1,10 +1,8 @@
 <?php
-    require_once("../Models/dao.php");
     require_once("../Models/Autoloader.php");
     Autoloader::register();
     if(isset($_POST["subscribtion"])){
         $etudiantDao = new EtudiantDao();
-        $etudiantDao->setPdo($pdo);
         $nom = htmlspecialchars($_POST["nom"]);
         $prenom = htmlspecialchars($_POST["prenom"]);
         $email = htmlspecialchars($_POST["email"]);

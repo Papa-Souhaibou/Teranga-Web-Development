@@ -1,3 +1,8 @@
+<?php
+    if (isset($_POST['numBatiment'])) {
+        $_POST['numChambre'] = '0'.$_POST['numBatiment'].mt_rand(0,9999);
+    }
+?>
 <div class="modal fade" id="setType">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -33,14 +38,24 @@
                 <button type="button" class="close" data-dismiss="modal">x</button>
             </div>
             <div class="modal-body" id="msg">
-                <form>
+                <form id="form-id" method="post">
                     <div class="form-group row">
                         <label for="inputPassword" class="col-sm-3 col-form-label">Numero Batiment</label>
                         <div class="col-sm-9">
-                            <select id="inputState" class="form-control">
-                                <option selected>Choisir le tnumero du batiment</option>
-                                <option>...</option>
+                            <select id="inputState" class="form-control" name="numBatiment">
+                                <option value="-1" selected disabled>Choisir le numéro du batiment</option>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
                             </select>
+                            <span class="error-form" id="numbat_error_message"></span>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -52,14 +67,16 @@
                     <div class="form-group row">
                         <label for="inputState" class="col-sm-3 col-form-label">Type</label>
                         <div class="col-sm-9">
-                            <select id="inputState" class="form-control">
-                                <option selected>Choisir le type de chambre</option>
-                                <option>...</option>
+                            <select id="inputStateType" class="form-control"  name="type">
+                                <option value="-1" selected disabled>Choisir le type de chambre</option>
+                                <option value="individuelle">Individuelle</option>
+                                <option value="commune"> Commune </option>
                             </select>
+                            <span class="error-form" id="type_error_message"></span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-around">
-                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                        <button type="submit" class="btn btn-primary" id="ajouter" name="ajouter">Ajouter</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
                     </div>
                 </form>
@@ -93,3 +110,33 @@
         </div>
     </div>
 </div>
+<script>
+
+$(function() {
+
+$("#ajouter").click(function(){
+    valid = true;
+    if ($('#inputState option:selected').val() == -1) {
+        $("#inputState").css("border-color", "#FF0000");
+        $("#inputState").next(".error-form").fadeIn().text("Veuillez choisir un numéro de bâtiment svp!");
+        valid = false;
+    }
+    else{
+        $("inputState").next(".error-form").fadeOut();
+    }
+
+    if ($('#inputStateType option:selected').val() == -1) {
+        $("#inputStateType").css("border-color", "#FF0000");
+        $("#inputStateType").next(".error-form").fadeIn().text("Veuillez choisir un type de chambre svp!");
+        valid = false;
+    }
+    else{
+        $("#inputStateType").next(".error-form").fadeOut();
+    }
+
+    return valid;
+});
+
+});
+
+</script>

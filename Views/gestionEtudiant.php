@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <div class="modal fade" id="subscribe-modal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -80,53 +83,27 @@
                 <tr>
                     <th scope="col">Matricule</th>
                     <th scope="col">Nom</th>
-                    <th scope="col">Prenom</th>
+                    <th scope="col">Prénom</th>
                     <th scope="col">email</th>
+                    <th scope="col">Téléphone </th>
+                    <th scope="col">Type</th>
                     <th scope="col">Modifier</th>
-                    <th scope="col">Supprimer</th>
                 </tr>
             </thead>
             <tbody>
+                <?php
+                    foreach ($_SESSION["liste"] as $etu):
+                ?>
                 <tr>
-                    <th scope="row">2014Toou0001</th>
-                    <td>Toure</td>
-                    <td>Souhaibou</td>
-                    <td>souhaibou@gmail.com</td>
-                    <td><img src="img/ic-liste-active.png"></td>
-                    <td><img src="img/ic-supprimer.png"></td>
+                    <th scope="row"> <?php echo $etu['matricule']; ?> </th>
+                    <td> <?php echo $etu['nom']; ?></td>
+                    <td> <?php echo $etu['prenom']; ?></td>
+                    <td> <?php echo $etu['email']; ?></td>
+                    <td> <?php echo $etu['telephone']; ?></td>
+                    <td> <?php echo $etu['typeetudiant']; ?></td>
+                    <td> <a href="" data-target="#subscribe-modal-update" data-toggle="modal"> <img src="img/ic-liste-active.png"> </a> </td> 
                 </tr>
-                <tr>
-                    <th scope="row">2018Somy0002</th>
-                    <td>Sow</td>
-                    <td>Amy</td>
-                    <td>amysow04@gmail.com</td>
-                    <td><img src="img/ic-liste-active.png"></td>
-                    <td><img src="img/ic-supprimer.png"></td>
-                </tr>
-                <tr>
-                    <th scope="row">2015Niby0003</th>
-                    <td>Niang</td>
-                    <td>Papa Djiby</td>
-                    <td>papadjibyniang@gmail.com</td>
-                    <td><img src="img/ic-liste-active.png"></td>
-                    <td><img src="img/ic-supprimer.png"></td>
-                </tr>
-                <tr>
-                    <th scope="row">2010DiBA0004</th>
-                    <td>Diallo</td>
-                    <td>Séckou BA</td>
-                    <td>sb.diallo@gmail.com</td>
-                    <td><img src="img/ic-liste-active.png"></td>
-                    <td><img src="img/ic-supprimer.png"></td>
-                </tr>
-                <tr>
-                    <th scope="row">2016Wane0005</th>
-                    <td>Wane</td>
-                    <td>Birane</td>
-                    <td>biranewane@gmail.com</td>
-                    <td><img src="img/ic-liste-active.png"></td>
-                    <td><img src="img/ic-supprimer.png"></td>
-                </tr>
+                <?php  endforeach; ?>
             </tbody>
         </table>
         <div class="d-flex justify-content-end">

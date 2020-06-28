@@ -1,9 +1,7 @@
 <?php
-    require_once("../Models/dao.php");
     require_once("../Models/Autoloader.php");
     Autoloader::register();
     $chambreDao = new ChambreDao();
-    $chambreDao->setPdo($pdo);
     if(isset($_POST["getRoom"])){
         $offset = (int) $_POST["offset"];
         $limit = (int) $_POST["limit"];
@@ -22,4 +20,30 @@
         $chambreDao->update($data);
     }elseif (isset($_POST["count"])) {
         echo json_encode($chambreDao->count());
+    }else if (isset($_POST['ajouter'])) {
+        $request1=mt_rand(0, 9999);
+        $nbbat = $_POST['numBatiment'];
+        $type = $_POST['type'];
+        if ($request1<=9) {
+            $count = "000".$request1;
+        }
+        else if ($request1<=99) {
+            $count = "00".$request1;
+        }
+        else if ($request1<=999) {
+            $count = "0".$request1;
+        }
+        else{
+            $count = $request1;
+        } 
+
+        $nbChambre = "0".$nbbat.$count;
+        $_POST['numChambre'] = $nbChambre;
+
+        $insert_array=array(
+            'numbatiment' => $nbbat,
+            'numchambre' => $nbChambre,
+            'type' => $type
+        );
+        $con= $chambreDao->add($insert_array); 
     }

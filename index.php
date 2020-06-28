@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,6 +18,12 @@
 </head>
 <body>
     <?php
+        require_once("Models/Autoloader.php");
+        Autoloader::register();
+        // require_once("Models/Manager.php");
+        // require_once("Models/EtudiantDao.php"); 
+        $etudiant = new EtudiantDao();
+        $_SESSION["liste"] = $etudiant->afficherListe();
         include_once("Views/navbar.php");
     ?>
     <div class="container-fluid" id="websiteContent">
@@ -38,5 +47,6 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
+    <script src="js/chambre.js"></script>
 </body>
 </html>

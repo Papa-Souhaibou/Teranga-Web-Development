@@ -3,18 +3,12 @@ class ChambreDao extends Manager{
 
     public function __construct(){
     }
-    public function add($chambre){
-        $request = "INSERT INTO chambre(numchambre,numbatiment,type)
-        VALUES(:numchambre,:numbatiment,:type)";
-        $response = $this->pdo->prepare($request);
-        $response->execute([
-            "numchambre" => $chambre->getNumchambre(),
-            "numbatiment" => $chambre->getNumbatiment(),
-            "type" => $chambre->getType()
-        ]);
-        $response->closeCursor();
+    public function add($obj){
+        $sql =  "INSERT INTO chambre (numbatiment, numchambre, type) VALUES (:numbatiment, :numchambre, :type)";
+        return $this->create($sql, $obj);
     }
     public function update($data){
+        $this->getConnexion();
         $request = "UPDATE chambre 
         SET type=:type WHERE idchambre=:idchambre";
         $response = $this->pdo->prepare($request);
@@ -22,6 +16,7 @@ class ChambreDao extends Manager{
         $response->closeCursor();
     }
     public function delete($id){
+        $this->getConnexion();
         $request = "DELETE FROM chambre WHERE idchambre=:idchambre";
         $response = $this->pdo->prepare($request);
         $response->bindValue(":idchambre",$id,PDO::PARAM_INT);
@@ -29,6 +24,7 @@ class ChambreDao extends Manager{
         $response->closeCursor();
     }
     public function selectRooms(int $limits = null,int $offset = null){
+        $this->getConnexion();
         if ($limits >= 0 && $offset) {
             $chambres = [];
             $request = "SELECT idchambre,numchambre,numbatiment,type FROM chambre
@@ -58,6 +54,7 @@ class ChambreDao extends Manager{
         }
     }
     public function count() {
+        $this->getConnexion();
         $request = "SELECT COUNT(idchambre) number FROM chambre";
         $response = $this->pdo->query($request);
         $number = $response->fetch(2);
@@ -65,9 +62,9 @@ class ChambreDao extends Manager{
         return $number;
     }
     public function findByMatricule($matricule){
-
+        $this->getConnexion();
     }
     public function findByType($type){
-
+        $this->getConnexion();
     }
 }
